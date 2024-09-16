@@ -70,7 +70,7 @@
     }
 
     // Verifique se o índice da tabela está correto
-    var tabelaDeHorarios = document.getElementsByTagName('table')[55]; // Verifique o índice correto
+    var tabelaDeHorarios = document.querySelector("#turmas-portal > table:nth-child(4)"); // Verifique o índice correto
 
     if (!tabelaDeHorarios) {
         console.error('Tabela de horários não encontrada.');
@@ -126,19 +126,27 @@
     let horas = grade.substring(indexMTN + 1).split('');
 
     // Dicionário para mapear números de dias para os nomes de dias em tableContents
-    let dic = ['', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sab'];
-    for (var i = 0; i < dias.length; i++) {
-        let diaIndex = parseInt(dias[i]);
-        if (!isNaN(diaIndex) && dic[diaIndex]) {
+    let dic = {
+        '2': 'segunda',
+        '3': 'terca',
+        '4': 'quarta',
+        '5': 'quinta',
+        '6': 'sexta',
+        '7': 'sab'
+    };
+
+    for (let i = 0; i < dias.length; i++) {
+        let diaIndex = dias[i];
+        if (dic[diaIndex]) {
             dias[i] = dic[diaIndex];
         } else {
-            console.error('Dia inválido encontrado:', dias[i]);
+            console.error('Dia inválido encontrado:', diaIndex);
             return;
         }
     }
 
     // Ajuste dos horários baseado na parte do dia (manhã, tarde, noite)
-    for (var i = 0; i < horas.length; i++) {
+    for (let i = 0; i < horas.length; i++) {
         horas[i] = parseInt(horas[i]);
         if (isNaN(horas[i])) {
             console.error('Hora inválida encontrada:', horas[i]);
@@ -150,8 +158,8 @@
     }
 
     // Preenchimento das células na tabela com os dados da disciplina
-    for (var i = 0; i < dias.length; i++) {
-        for (var j = 0; j < horas.length; j++) {
+    for (let i = 0; i < dias.length; i++) {
+        for (let j = 0; j < horas.length; j++) {
             let rowIndex = horas[j] - 1; // Convertendo para índice de linha
 
             // Verifique se tableContents[dias[i]] está definido e tem a propriedade length
@@ -166,7 +174,11 @@
     }
 }
 
+
+
+
     // Remover linhas vazias da tabela
+    /*
     for (var i = 1; i < table.rows.length; i++) {
         let isPopulada = false;
         let thisRow = table.rows[i];
@@ -178,6 +190,7 @@
             i--;
         }
     }
+*/
 
 })();
 
